@@ -2,16 +2,15 @@ import rss from '@astrojs/rss';
 import { getCollection } from 'astro:content';
 
 export async function GET(context) {
-  const posts = await getCollection('posts');
+  const solutions = await getCollection('picoctf');
+
   return rss({
-    title: 'Astro Terminal Theme',
-    description: 'A terminal-inspired theme for Astro',
+    title: 'CyberCult Solutions RSS Feed',
+    description: 'Latest solutions from CyberCult',
     site: context.site,
-    items: posts.map((post) => ({
-      title: post.data.title,
-      pubDate: post.data.pubDate,
-      description: post.data.description,
-      link: `/posts/${post.slug}/`,
+    items: solutions.map((solution) => ({
+      title: solution.data.title,
+      pubDate: solution.data.date,
     })),
     customData: `<language>en-us</language>`,
   });
