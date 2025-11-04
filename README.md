@@ -1,241 +1,150 @@
-# Astro Terminal Theme
+# CyberCult
 
-I love both Astro and the Terminal theme by panr, so I decided to port this theme to Astro. This is an adaptation of the [Hugo Terminal Theme](https://github.com/panr/hugo-theme-terminal) created by [panr](https://github.com/panr). All design credit goes to the original author.
+**CyberCult** es un espacio dedicado a la ciberseguridad y los desafíos CTF (Capture The Flag). Este sitio está construido con Astro y adaptado del [Hugo Terminal Theme](https://github.com/panr/hugo-theme-terminal) para mantener una estética retro de terminal.
 
-![Terminal Theme Screenshot](https://panr.github.io/hugo-theme-terminal-demo/img/terminal-css.png)
+## 🎯 ¿Qué es CyberCult?
 
-- [Demo site](https://dennisklappe.github.io/astro-theme-terminal/)
-- [Terminal.css - Create your own colour scheme](https://panr.github.io/terminal-css/)
+CyberCult es una plataforma para compartir:
+- **Writeups de CTF** — Soluciones detalladas de desafíos de PicoCTF y otras plataformas
+- **Recursos de aprendizaje** — Herramientas, técnicas y documentación útil
+- **Conocimiento técnico** — Posts sobre ciberseguridad, hacking ético y análisis forense
 
-## Features
+## ✨ Características
 
-- **Customisable colour schemes** — works with panr's [Terminal.css colour scheme generator](https://panr.github.io/terminal-css/) or choose from the default schemes available there
-- **[Fira Code](https://github.com/tonsky/FiraCode)** as default monospaced font — easily changeable
-- **nice syntax highlighting** — thanks to Astro's built-in Shiki support
-- **fully responsive** — works great on mobile and desktop
-- **tag support** — organise posts with tags and browse by tag
-- **RSS feed** — automatically generated RSS feed for your blog
+- **Sistema de soluciones PicoCTF** — Cargar automáticamente writeups desde Markdown con frontmatter
+- **Filtrado avanzado** — Buscar por nombre, categoría (Web Exploitation, Cryptography, Forensics, etc.) y dificultad
+- **Paginación client-side** — Navegación fluida por las soluciones (6 items por página)
+- **Badges de categoría** — Visualización con colores distintivos para cada tipo de desafío
+- **Esquemas de colores personalizables** — Compatible con [Terminal.css](https://panr.github.io/terminal-css/)
+- **Syntax highlighting** — Resaltado de código con Shiki
+- **Totalmente responsive** — Funciona perfecto en móvil y desktop
+- **RSS feed** — Feed automático para seguir nuevas publicaciones
 
-## Requirements
+## 🚀 Requisitos
 
-- Astro v5.0.0 or higher
-- Node.js 18 or higher
+- Astro v5.0.0 o superior
+- Node.js 18 o superior
 
-## Installation
+## 📦 Instalación
 
-### Clone repository
+### Clonar el repositorio
 
 ```bash
-git clone https://github.com/dennisklappe/astro-theme-terminal.git your-site-name
-cd your-site-name
+git clone https://github.com/vterreno/cybercult.git
+cd cybercult
 npm install
 ```
 
-### Use as a template
+## 🛠️ Cómo usar
 
-You can also use this repository as a template on GitHub:
-
-1. Click the "Use this template" button on the GitHub repository
-2. Create a new repository from the template
-3. Clone your new repository and install dependencies
-
-## How to start
+### Desarrollo local
 
 ```bash
 npm run dev
 ```
 
-## How to build
+### Build de producción
 
 ```bash
 npm run build
 ```
 
-## Configuration
+### Preview del build
 
-### Site Configuration
-
-Edit `astro.config.mjs`:
-
-```js
-import { defineConfig } from 'astro/config';
-
-export default defineConfig({
-  site: 'https://your-domain.com',
-  markdown: {
-    shikiConfig: {
-      theme: 'css-variables',
-      langs: [],
-      wrap: true,
-    },
-  },
-});
+```bash
+npm run preview
 ```
 
-### Theme Configuration
+## 📝 Crear writeups de PicoCTF
 
-The theme uses CSS custom properties for theming. To change colours, modify the variables in `src/styles/terminal.css`:
+Los writeups se crean como archivos Markdown en `src/content/picoctf/<categoria>/nombre-del-desafio.md`.
 
-```css
-:root {
-  --background: #1e2022;
-  --foreground: #d6deeb;
-  --accent: #ffa86a;
-  --secondary: #8be9fd;
-  --selection: #4c5f7a;
-  --code-border: #4c5f7a;
-  --comment: #637777;
-}
-```
-
-You can also use panr's [Terminal.css generator](https://panr.github.io/terminal-css/) to create your own colour scheme - this Astro port is fully compatible with the generated colour schemes.
-
-### Navigation Menu
-
-Edit the navigation in `src/layouts/BaseLayout.astro`. The theme includes a dropdown menu for additional pages:
-
-```astro
-<!-- Main navigation items -->
-<li><a href="/about">About</a></li>
-<li><a href="/posts/showcase">Showcase</a></li>
-
-<!-- Dropdown menu -->
-<ul class="menu__dropdown">
-  <li><a href="/posts">Posts</a></li>
-  <li><a href="/tags">Tags</a></li>
-  <li><a href="/posts/rich-content">Rich Content</a></li>
-</ul>
-```
-
-## Content
-
-### Posts
-
-Create posts in `src/content/posts/`:
+### Formato recomendado
 
 ```md
 ---
-title: 'My First Post'
-description: 'This is my first blog post'
-pubDate: 2024-01-01
-author: 'Your Name'
-tags: ['astro', 'terminal']
+title: "Nombre del Desafío"
+slug: "nombre-del-desafio"
+date: 11/04/2025
+category: "Forensics"
+difficulty: "Fácil/Medio/Difícil"
+summary: "Breve descripción del desafío"
 ---
 
-Your content here...
+# Desafío
+Descripción del desafío...
+
+# Herramientas
+- exiftool
+- strings
+
+## Explicación
+Paso a paso de la solución...
+
+# Notas / Post-mortem
+Aprendizajes adicionales...
+
+# Referencias
+- Enlaces útiles
 ```
 
-### Pages
+### Categorías disponibles
 
-Create pages in `src/pages/`:
+Los writeups se organizan en carpetas por categoría:
+- `cryptography/` — Desafíos de criptografía
+- `web-exploitation/` — Vulnerabilidades web
+- `forensics/` — Análisis forense
+- `binary-exploitation/` — Exploits binarios
+- `reverse-engineering/` — Ingeniería inversa
 
-```astro
----
-import BaseLayout from '../layouts/BaseLayout.astro';
----
+## 📂 Estructura del proyecto
 
-<BaseLayout title="About">
-  <div class="page">
-    <h1>About</h1>
-    <p>Your content here...</p>
-  </div>
-</BaseLayout>
+```
+cybercult/
+├── public/
+│   ├── fonts/
+│   └── styles/themes/
+├── src/
+│   ├── components/
+│   │   ├── FormattedDate.astro
+│   │   └── PostCard.astro
+│   ├── content/
+│   │   ├── picoctf/
+│   │   │   ├── cryptography/
+│   │   │   ├── forensics/
+│   │   │   ├── web-exploitation/
+│   │   │   ├── binary-exploitation/
+│   │   │   ├── reverse-engineering/
+│   │   │   └── FORMAT.md
+│   │   └── posts/
+│   ├── layouts/
+│   │   ├── BaseLayout.astro
+│   │   └── PostLayout.astro
+│   ├── pages/
+│   │   ├── ctf/
+│   │   │   ├── picocctf/
+│   │   │   │   ├── [slug].astro     # Páginas dinámicas de soluciones
+│   │   │   │   └── soluciones.astro # Listado con filtros y paginación
+│   │   │   └── recursos.astro
+│   │   ├── posts/
+│   │   ├── about.astro
+│   │   └── index.astro
+│   └── styles/
+├── astro.config.mjs
+├── package.json
+└── README.md
 ```
 
-## Syntax Highlighting
+## 🤝 Contribuir
 
-The theme uses Astro's built-in Shiki syntax highlighter with a custom monochrome theme that matches the terminal aesthetic. Code blocks automatically get syntax highlighting:
+Si encuentras bugs o tienes ideas para mejoras:
+1. Abre un issue describiendo el problema o sugerencia
+2. Crea un fork del repositorio
+3. Implementa tus cambios
+4. Envía un pull request
 
-```js
-// JavaScript example
-function hello() {
-  console.log("Hello, World!");
-}
-```
+## 📄 Licencia
 
-## Layouts
+Este proyecto está basado en el [Hugo Terminal Theme](https://github.com/panr/hugo-theme-terminal) creado por [panr](https://github.com/panr), bajo licencia MIT.
 
-### BaseLayout
-
-The main layout that includes header, footer, and all necessary CSS imports.
-
-### PostLayout
-
-Layout specifically for posts, includes metadata display and post navigation.
-
-## Components
-
-- **Header** - Site header with terminal decoration
-- **Footer** - Site footer with copyright
-- **PostCard** - Post preview card
-- **Pagination** - Page navigation component
-- **FormattedDate** - Date formatting component
-
-## Features
-
-### Tags
-
-Posts can be organised with tags. Each tag gets its own page at `/tags/[tag-name]` showing all posts with that tag. A tag index page at `/tags` displays all available tags.
-
-
-## Customization
-
-### Fonts
-
-To change the monospace font, update the font import in `src/styles/fonts.css` and the font-family in `src/styles/terminal.css`.
-
-### Colours
-
-Create your own colour scheme or choose from the default schemes using panr's [Terminal.css generator](https://panr.github.io/terminal-css/).
-
-### CSS Structure
-
-The theme uses modular CSS files:
-- `terminal.css` - Core theme styles and variables
-- `fonts.css` - Font imports and utilities
-- `main.css` - Layout and utility classes
-- `header.css` - Header styles
-- `menu.css` - Navigation menu
-- `footer.css` - Footer styles
-- `post.css` - Post styles
-- `buttons.css` - Button components
-- `code.css` - Code block functionality
-- `syntax.css` - Syntax highlighting theme
-- `pagination.css` - Pagination styles
-- `gist.css` - GitHub Gist embed styles
-- `terms.css` - Terms and conditions styles
-
-## Deployment
-
-### GitHub Pages
-
-This theme includes a GitHub Actions workflow for automatic deployment to GitHub Pages:
-
-1. Go to your repository Settings → Pages
-2. Set Source to "GitHub Actions"
-3. Push to the `main` branch or manually trigger the workflow
-4. Your site will be available at `https://[username].github.io/astro-theme-terminal`
-
-To deploy to a custom domain or different base path, update the `site` and `base` options in `astro.config.mjs`.
-
-**Note**: The base path is only applied in production builds. During development, the site runs at the root path (`/`) for easier testing.
-
-## Contributing
-
-If you find any bugs or have ideas for improvements, please open an issue or submit a pull request.
-
-## Credits
-
-This theme is a port of the [Hugo Terminal Theme](https://github.com/panr/hugo-theme-terminal) created by [panr](https://github.com/panr). All design decisions, colour schemes, and visual aesthetics are credited to the original author.
-
-Astro port created by [Dennis Klappe](https://github.com/dennisklappe).
-
-## License
-
-The original Hugo Terminal Theme is licensed under the MIT License. This Astro port maintains the same licence.
-
-Copyright for the original design: panr
-
----
-
-Made with love for the Astro community
+🔐 Hecho con ❤️ para la comunidad de ciberseguridad
