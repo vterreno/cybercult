@@ -1,0 +1,296 @@
+---
+export interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+}
+
+const { title, description = 'CyberCult - Tu espacio de ciberseguridad y CTF', image } = Astro.props;
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/';
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
+    <link rel="alternate icon" type="image/x-icon" href={`${base}favicon.ico`} />
+    <meta name="generator" content={Astro.generator} />
+    
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+    
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    {image && <meta property="og:image" content={new URL(image, Astro.url)} />}
+    
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    {image && <meta name="twitter:image" content={new URL(image, Astro.url)} />}
+    
+    <link rel="sitemap" href={`${base}sitemap-index.xml`} />
+    <link rel="alternate" type="application/rss+xml" title="RSS" href={`${base}rss.xml`} />
+  </head>
+    <body>
+    <div class="container center">
+      <header class="header">
+        <div class="header__inner">
+          <div class="header__logo">
+            <a href={base}>
+              <div class="logo">
+                CyberCult
+              </div>
+            </a>
+          </div>
+          <ul class="menu menu--mobile">
+            <li class="menu__trigger">Menu ▾</li>
+            <li>
+              <ul class="menu__dropdown">
+                <li><a href={`${base}/`}>Inicio</a></li>
+                <li><a href={`${base}ctf/picocctf/`}>PicoCTF - Inicio</a></li>
+                <li><a href={`${base}ctf/picocctf/soluciones/`}>PicoCTF - Soluciones</a></li>
+                <li><a href={`${base}ctf/recursos/`}>Recursos</a></li>
+                <li><a href="#" target="_blank" rel="noopener">🎮 Discord</a></li>
+              </ul>
+            </li>
+
+          </ul>
+        </div>
+        
+        <nav class="navigation-menu">
+          <ul class="navigation-menu__inner menu--desktop">
+            <li>
+              <ul class="menu">
+                <li class="menu__trigger">PicoCTF ▾</li>
+                <li>
+                  <ul class="menu__dropdown">
+                    <li><a href={`${base}ctf/picocctf/`}>Inicio</a></li>
+                    <li><a href={`${base}ctf/picocctf/soluciones/`}>Soluciones</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li><a href={`${base}ctf/recursos/`}>Recursos</a></li>
+            <li><a href="#" target="_blank" rel="noopener">🎮 Discord</a></li>
+            <li class="menu-right">
+              <a href="#" id="settingsToggle">Config ▶</a>
+            </li>
+          </ul>
+        </nav>
+      </header>
+      
+      <!-- Settings Modal -->
+      <div class="settings-modal" id="settingsModal">
+        <div class="settings-modal-overlay" id="settingsOverlay"></div>
+        <div class="settings-modal-content">
+          <div class="settings-modal-header">
+            <h2>Configuración</h2>
+            <button class="settings-modal-close" id="settingsClose">✕</button>
+          </div>
+          <div class="settings-modal-body">
+            <div class="setting-item">
+              <label class="setting-label">
+                <span>Animación</span>
+                <input type="checkbox" id="animationToggle" checked />
+              </label>
+            </div>
+            <div class="setting-item">
+              <label class="setting-label" style="flex-direction: column;">
+                <span>Tema:</span>
+                <select id="themeSelect">
+                  <option value="pistacho">Pistacho</option>
+                  <option value="matrix">Matrix</option>
+                  <option value="windows">Windows</option>
+                  <option value="heliotrope">Heliotrope</option>
+                  <option value="pink-panther">Pink Panther</option>
+                  <option value="viking">Viking</option>
+                </select>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <main class="content">
+        <slot />
+      </main>
+      
+      <footer class="footer">
+        <div class="footer__inner">
+          <div class="copyright">
+            <span>© 2025 CyberCult</span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script>
+      // Menu functionality
+      (() => {
+        const container = document.querySelector(".container");
+        const menus = document.querySelectorAll(".menu");
+        
+        // Close menus when clicking outside
+        document.body.addEventListener("click", () => {
+          menus.forEach(menu => {
+            if (menu.classList.contains("open")) {
+              menu.classList.remove("open");
+            }
+          });
+        });
+        
+        // Close menus on window resize
+        window.addEventListener("resize", () => {
+          menus.forEach(menu => {
+            menu.classList.remove("open");
+          });
+        });
+        
+        // Menu trigger functionality
+        menus.forEach(menu => {
+          const trigger = menu.querySelector(".menu__trigger");
+          const dropdown = menu.querySelector(".menu__dropdown");
+          
+          if (trigger && dropdown) {
+            trigger.addEventListener("click", event => {
+              event.stopPropagation();
+              
+              if (menu.classList.contains("open")) {
+                menu.classList.remove("open");
+              } else {
+                // Close other menus
+                menus.forEach(m => m.classList.remove("open"));
+                menu.classList.add("open");
+              }
+              
+              // Adjust dropdown position if it goes outside container
+              if (dropdown.getBoundingClientRect().right > container.getBoundingClientRect().right) {
+                dropdown.style.left = "auto";
+                dropdown.style.right = "0";
+              }
+            });
+            
+            dropdown.addEventListener("click", e => e.stopPropagation());
+          }
+        });
+      })();
+      
+      // Settings Panel functionality
+      (() => {
+        // Cookie helpers
+        function setCookie(name, value, days = 365) {
+          const expires = new Date(Date.now() + days * 864e5).toUTCString();
+          document.cookie = name + '=' + encodeURIComponent(value) + '; expires=' + expires + '; path=/';
+        }
+        
+        function getCookie(name) {
+          return document.cookie.split('; ').reduce((r, v) => {
+            const parts = v.split('=');
+            return parts[0] === name ? decodeURIComponent(parts[1]) : r;
+          }, '');
+        }
+        
+        // Elements
+        const settingsToggle = document.getElementById('settingsToggle');
+        const settingsModal = document.getElementById('settingsModal');
+        const settingsOverlay = document.getElementById('settingsOverlay');
+        const settingsClose = document.getElementById('settingsClose');
+        const animationToggle = document.getElementById('animationToggle');
+        const themeSelect = document.getElementById('themeSelect');
+        
+        // Open modal
+        settingsToggle.addEventListener('click', (e) => {
+          e.preventDefault();
+          settingsModal.classList.add('open');
+          document.body.style.overflow = 'hidden';
+        });
+        
+        // Close modal
+        const closeModal = () => {
+          settingsModal.classList.remove('open');
+          document.body.style.overflow = '';
+        };
+        
+        settingsClose.addEventListener('click', closeModal);
+        settingsOverlay.addEventListener('click', closeModal);
+        
+        // Close with ESC key
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && settingsModal.classList.contains('open')) {
+            closeModal();
+          }
+        });
+        
+        // Load saved preferences
+        const savedAnimation = getCookie('headerAnimation');
+        const savedTheme = getCookie('theme') || 'pistacho';
+        
+        if (savedAnimation === 'false') {
+          animationToggle.checked = false;
+          document.documentElement.classList.add('no-animation');
+        }
+        
+        themeSelect.value = savedTheme;
+        loadTheme(savedTheme);
+        
+        // Animation toggle
+        animationToggle.addEventListener('change', (e) => {
+          const enabled = e.target.checked;
+          setCookie('headerAnimation', enabled);
+          
+          if (enabled) {
+            document.documentElement.classList.remove('no-animation');
+          } else {
+            document.documentElement.classList.add('no-animation');
+          }
+        });
+        
+        // Theme selector
+        themeSelect.addEventListener('change', (e) => {
+          const theme = e.target.value;
+          setCookie('theme', theme);
+          loadTheme(theme);
+        });
+        
+        function loadTheme(theme) {
+          // Remove existing theme links
+          const existingTheme = document.getElementById('theme-link');
+          if (existingTheme) {
+            existingTheme.remove();
+          }
+          
+          // Add new theme
+          const link = document.createElement('link');
+          link.id = 'theme-link';
+          link.rel = 'stylesheet';
+          link.href = `/styles/themes/${theme}.css`;
+          document.head.appendChild(link);
+        }
+      })();
+    </script>
+  </body>
+</html>
+
+<style is:global>
+  /* Import all CSS files in the correct order */
+  @import "../styles/terminal.css";
+  @import "../styles/fonts.css";
+  @import "../styles/main.css";
+  @import "../styles/header.css";
+  @import "../styles/menu.css";
+  @import "../styles/footer.css";
+  @import "../styles/buttons.css";
+  @import "../styles/post.css";
+  @import "../styles/pagination.css";
+  @import "../styles/code.css";
+  @import "../styles/syntax.css";
+  @import "../styles/gist.css";
+  @import "../styles/terms.css";
+  @import "../styles/settings.css";
+</style>

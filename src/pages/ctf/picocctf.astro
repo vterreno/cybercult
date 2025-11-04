@@ -1,0 +1,53 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="PicoCTF - CyberCult">
+  <div class="page">
+    <h1>PicoCTF</h1>
+    <p>
+      PicoCTF es una competición de seguridad informática creada por expertos en ciberseguridad de Carnegie Mellon University.
+    </p>
+    
+    <h2>¿Qué es PicoCTF?</h2>
+    <p>
+      Es una plataforma gratuita de aprendizaje diseñada para introducir a estudiantes de todas las edades en el mundo de la ciberseguridad 
+      a través de desafíos prácticos y divertidos.
+    </p>
+    
+    <h2>Categorías de desafíos</h2>
+    <ul>
+      <li><strong>Web Exploitation</strong> - Vulnerabilidades en aplicaciones web</li>
+      <li><strong>Cryptography</strong> - Cifrado y descifrado de información</li>
+      <li><strong>Reverse Engineering</strong> - Análisis de binarios y código</li>
+      <li><strong>Forensics</strong> - Análisis forense digital</li>
+      <li><strong>Binary Exploitation</strong> - Explotación de vulnerabilidades en binarios</li>
+    </ul>
+    
+    <h2>Enlaces útiles</h2>
+    <ul>
+      <li><a href="https://picoctf.org/" target="_blank" rel="noopener">Sitio oficial de PicoCTF</a></li>
+      <li><a href="https://play.picoctf.org/practice" target="_blank" rel="noopener">Práctica en PicoCTF</a></li>
+    </ul>
+  </div>
+</BaseLayout>
+
+<style>
+  .page {
+    max-width: 760px;
+    margin: 0 auto;
+  }
+  
+  .page h2 {
+    margin-top: 2rem;
+  }
+  
+  .page ul {
+    margin-left: 2rem;
+    margin-top: 1rem;
+  }
+  
+  .page li {
+    margin-bottom: 0.5rem;
+  }
+</style>

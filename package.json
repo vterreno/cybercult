@@ -1,0 +1,21 @@
+{
+  "name": "cybercult",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "CyberCult - Tu espacio de ciberseguridad y CTF",
+  "license": "MIT",
+  "keywords": ["cybersecurity", "ctf", "hacking", "security", "picocctf"],
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "astro": "^5.13.2"
+  },
+  "devDependencies": {
+    "@astrojs/sitemap": "^3.2.2",
+    "@astrojs/rss": "^4.0.11"
+  }
+}

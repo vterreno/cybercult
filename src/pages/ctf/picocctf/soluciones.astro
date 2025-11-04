@@ -1,0 +1,424 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+// Datos de ejemplo de soluciones
+const soluciones = [
+  {
+    id: 1,
+    nombre: "SQL Injection",
+    categoria: "Web Exploitation",
+    dificultad: "Fácil",
+    puntos: 100,
+    url: "#"
+  },
+  {
+    id: 2,
+    nombre: "Caesar Cipher",
+    categoria: "Cryptography",
+    dificultad: "Fácil",
+    puntos: 50,
+    url: "#"
+  },
+  {
+    id: 3,
+    nombre: "Hidden Flag",
+    categoria: "Forensics",
+    dificultad: "Media",
+    puntos: 200,
+    url: "#"
+  },
+  {
+    id: 4,
+    nombre: "Buffer Overflow",
+    categoria: "Binary Exploitation",
+    dificultad: "Difícil",
+    puntos: 400,
+    url: "#"
+  },
+  {
+    id: 5,
+    nombre: "Crackme",
+    categoria: "Reverse Engineering",
+    dificultad: "Media",
+    puntos: 250,
+    url: "#"
+  },
+  {
+    id: 6,
+    nombre: "XSS Attack",
+    categoria: "Web Exploitation",
+    dificultad: "Media",
+    puntos: 150,
+    url: "#"
+  },
+  {
+    id: 7,
+    nombre: "RSA Challenge",
+    categoria: "Cryptography",
+    dificultad: "Difícil",
+    puntos: 350,
+    url: "#"
+  },
+  {
+    id: 8,
+    nombre: "Memory Dump Analysis",
+    categoria: "Forensics",
+    dificultad: "Difícil",
+    puntos: 450,
+    url: "#"
+  },
+];
+
+const categorias = [...new Set(soluciones.map(s => s.categoria))].sort();
+const dificultades = ["Fácil", "Media", "Difícil"];
+---
+
+<BaseLayout title="Soluciones PicoCTF - CyberCult">
+  <div class="page">
+    <h1>Soluciones PicoCTF</h1>
+    <p>
+      Aquí encontrarás writeups y soluciones detalladas de diversos desafíos de PicoCTF.
+    </p>
+    
+    <div class="search-container">      
+      <div class="filters">
+        <div class="filter-group">
+          <label for="search-name">Buscar por nombre:</label>
+          <input 
+            type="text" 
+            id="search-name" 
+            placeholder="Escribe el nombre del desafío..."
+            class="search-input"
+          />
+        </div>
+        
+        <div class="filter-group">
+          <label for="filter-category">Categoría:</label>
+          <select id="filter-category" class="filter-select">
+            <option value="">Todas las categorías</option>
+            {categorias.map(cat => (
+              <option value={cat}>{cat}</option>
+            ))}
+          </select>
+        </div>
+        
+        <div class="filter-group">
+          <label for="filter-difficulty">Dificultad:</label>
+          <select id="filter-difficulty" class="filter-select">
+            <option value="">Todas las dificultades</option>
+            {dificultades.map(dif => (
+              <option value={dif}>{dif}</option>
+            ))}
+          </select>
+        </div>
+        
+        <button id="clear-filters" class="clear-btn">Limpiar filtros</button>
+      </div>
+      
+      <div id="results-count" class="results-count"></div>
+      
+      <div class="solutions-grid" id="solutions-container">
+        {soluciones.map(solucion => (
+          <div 
+            class="solution-card" 
+            data-name={solucion.nombre.toLowerCase()}
+            data-category={solucion.categoria}
+            data-difficulty={solucion.dificultad}
+          >
+            <div class="solution-header">
+              <h3>{solucion.nombre}</h3>
+              <span class={`difficulty-badge ${solucion.dificultad.toLowerCase()}`}>
+                {solucion.dificultad}
+              </span>
+            </div>
+            <div class="solution-info">
+              <span class="category">� {solucion.categoria}</span>
+              <span class="points">⭐ {solucion.puntos} pts</span>
+            </div>
+            <a href={solucion.url} class="solution-link">Ver solución →</a>
+          </div>
+        ))}
+      </div>
+      
+      <div id="no-results" class="no-results" style="display: none;">
+        <p>😕 No se encontraron soluciones con los filtros seleccionados.</p>
+      </div>
+    </div>
+    
+    <div class="info-box">
+      <p>
+        <strong>¿Tenés una solución que quieras compartir?</strong><br>
+        Únite a nuestro Discord y comparti tus soluciones con la comunidad.
+      </p>
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  // Función para filtrar las soluciones
+  function filterSolutions() {
+    const searchName = (document.getElementById('search-name') as HTMLInputElement).value.toLowerCase();
+    const filterCategory = (document.getElementById('filter-category') as HTMLSelectElement).value;
+    const filterDifficulty = (document.getElementById('filter-difficulty') as HTMLSelectElement).value;
+    
+    const cards = document.querySelectorAll('.solution-card');
+    let visibleCount = 0;
+    
+    cards.forEach((card) => {
+      const htmlCard = card as HTMLElement;
+      const name = htmlCard.dataset.name || '';
+      const category = htmlCard.dataset.category || '';
+      const difficulty = htmlCard.dataset.difficulty || '';
+      
+      const matchesName = name.includes(searchName);
+      const matchesCategory = !filterCategory || category === filterCategory;
+      const matchesDifficulty = !filterDifficulty || difficulty === filterDifficulty;
+      
+      if (matchesName && matchesCategory && matchesDifficulty) {
+        htmlCard.style.display = 'block';
+        visibleCount++;
+      } else {
+        htmlCard.style.display = 'none';
+      }
+    });
+    
+    // Actualizar contador de resultados
+    const resultsCount = document.getElementById('results-count');
+    const noResults = document.getElementById('no-results');
+    
+    if (resultsCount) {
+      resultsCount.textContent = `Mostrando ${visibleCount} de ${cards.length} soluciones`;
+    }
+    
+    // Mostrar mensaje si no hay resultados
+    if (noResults) {
+      noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+    }
+  }
+  
+  // Función para limpiar filtros
+  function clearFilters() {
+    (document.getElementById('search-name') as HTMLInputElement).value = '';
+    (document.getElementById('filter-category') as HTMLSelectElement).value = '';
+    (document.getElementById('filter-difficulty') as HTMLSelectElement).value = '';
+    filterSolutions();
+  }
+  
+  // Agregar event listeners
+  document.getElementById('search-name')?.addEventListener('input', filterSolutions);
+  document.getElementById('filter-category')?.addEventListener('change', filterSolutions);
+  document.getElementById('filter-difficulty')?.addEventListener('change', filterSolutions);
+  document.getElementById('clear-filters')?.addEventListener('click', clearFilters);
+  
+  // Inicializar contador
+  filterSolutions();
+</script>
+
+<style>
+  .page {
+    max-width: 960px;
+    margin: 0 auto;
+  }
+  
+  .page h2 {
+    margin-top: 2.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  /* Search Container */
+  .search-container {
+    margin-top: 2rem;
+  }
+  
+  /* Filters */
+  .filters {
+    background-color: color-mix(in srgb, var(--foreground) 3%, transparent);
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: flex-end;
+  }
+  
+  .filter-group {
+    flex: 1;
+    min-width: 200px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .filter-group label {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--foreground);
+  }
+  
+  .search-input,
+  .filter-select {
+    padding: 0.75rem;
+    border: 2px solid var(--foreground);
+    border-radius: var(--radius);
+    background-color: var(--background);
+    color: var(--foreground);
+    font-size: 0.9rem;
+    transition: border-color 0.2s;
+  }
+  
+  .search-input:focus,
+  .filter-select:focus {
+    outline: none;
+    border-color: var(--accent);
+  }
+  
+  .clear-btn {
+    padding: 0.75rem 1.5rem;
+    background-color: transparent;
+    color: var(--accent);
+    border: 4px solid var(--accent);
+    border-radius: var(--radius);
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background 0.15s linear;
+    white-space: nowrap;
+  }
+  
+  .clear-btn:hover {
+    background: color-mix(in srgb, var(--accent) 15%, transparent);
+  }
+  
+  /* Results Count */
+  .results-count {
+    margin-bottom: 1rem;
+    font-size: 0.95rem;
+    color: color-mix(in srgb, var(--foreground) 70%, transparent);
+    font-weight: 500;
+  }
+  
+  /* Solutions Grid */
+  .solutions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  
+  /* Solution Card */
+  .solution-card {
+    background-color: color-mix(in srgb, var(--foreground) 3%, transparent);
+    border: 3px solid var(--accent);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+    box-shadow: 0 2px 8px color-mix(in srgb, var(--accent) 20%, transparent);
+  }
+  
+  .solution-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--accent);
+    box-shadow: 0 4px 16px color-mix(in srgb, var(--accent) 40%, transparent);
+  }
+  
+  .solution-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+    gap: 1rem;
+  }
+  
+  .solution-header h3 {
+    margin: 0;
+    font-size: 1.25rem;
+    flex: 1;
+  }
+  
+  .difficulty-badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  
+  .difficulty-badge.fácil {
+    background-color: rgba(76, 175, 80, 0.2);
+    color: #4caf50;
+  }
+  
+  .difficulty-badge.media {
+    background-color: rgba(255, 193, 7, 0.2);
+    color: #ffc107;
+  }
+  
+  .difficulty-badge.difícil {
+    background-color: rgba(244, 67, 54, 0.2);
+    color: #f44336;
+  }
+  
+  .solution-info {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+    color: color-mix(in srgb, var(--foreground) 70%, transparent);
+  }
+  
+  .solution-info span {
+    display: flex;
+    align-items: center;
+  }
+  
+  .solution-link {
+    display: inline-block;
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 600;
+    transition: opacity 0.2s;
+  }
+  
+  .solution-link:hover {
+    opacity: 0.8;
+  }
+  
+  /* No Results */
+  .no-results {
+    text-align: center;
+    padding: 3rem 1rem;
+    background-color: color-mix(in srgb, var(--foreground) 3%, transparent);
+    border-radius: var(--radius);
+    margin-bottom: 2rem;
+  }
+  
+  .no-results p {
+    font-size: 1.1rem;
+    color: color-mix(in srgb, var(--foreground) 70%, transparent);
+  }
+  
+  /* Info Box */
+  .info-box {
+    background-color: rgba(88, 101, 242, 0.1);
+    border-left: 4px solid #5865F2;
+    padding: 1rem;
+    margin: 2rem 0;
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .filters {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    
+    .filter-group {
+      min-width: 100%;
+    }
+    
+    .solutions-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

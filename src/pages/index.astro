@@ -1,0 +1,75 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="CyberCult">
+  <div class="index-content framed">
+    <h1 id="hello-there">Welcome to Cyber Cult Collective</h1>
+    <p>Tu espacio dedicado al mundo de la ciberseguridad. Explora desafíos, aprende técnicas y mejora tus habilidades en seguridad informática.</p>
+    
+    <div class="discord-banner">
+      <h2> Únite a nuestra comunidad</h2>
+      <p>Conecta con otros entusiastas de la ciberseguridad, compartí conocimientos y participa en desafíos CTF juntos.</p>
+      <a href="#" target="_blank" rel="noopener" class="discord-button">
+        Unirse al Discord
+      </a>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .discord-banner {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    border: 2px solid var(--accent);
+    border-radius: 4px;
+    background-color: rgba(255, 255, 255, 0.02);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .discord-banner::before {
+    content: "⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄\A⠄⠄⠄⠄⠄⠄⠄⠄⠄⢀⣠⡄⠄⠄⠄⠄⠄⠄⢠⣄⡀⠄⠄⠄⠄⠄⠄⠄⠄⠄\A⠄⠄⠄⠄⠄⢀⣴⣾⣿⣿⣿⣿⣶⣶⣶⣶⣶⣶⣿⣿⣿⣿⣷⣦⡀⠄⠄⠄⠄⠄\A⠄⠄⠄⠄⢀⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⡀⠄⠄⠄⠄\A⠄⠄⠄⠄⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⠄⠄⠄⠄\A⠄⠄⠄⣼⣿⣿⣿⣿⣿⡿⠿⠿⣿⣿⣿⣿⣿⣿⠿⠿⢿⣿⣿⣿⣿⣿⣧⠄⠄⠄\A⠄⠄⢠⣿⣿⣿⣿⣿⡟⠄⠄⠄⠈⣿⣿⣿⣿⠁⠄⠄⠄⢹⣿⣿⣿⣿⣿⡄⠄⠄\A⠄⠄⢸⣿⣿⣿⣿⣿⣇⠄⠄⠄⠄⣿⣿⣿⣿⠄⠄⠄⠄⣰⣿⣿⣿⣿⣿⡇⠄⠄\A⠄⠄⢸⣿⣿⣿⣿⣿⣿⣶⣤⣴⣾⣿⣿⣿⣿⣷⣦⣤⣶⣿⣿⣿⣿⣿⣿⣷⠄⠄\A⠄⠄⢸⣿⣿⣿⣿⣿⠿⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠿⣿⣿⣿⣿⣿⡟⠄⠄\A⠄⠄⠄⠙⠻⢿⣿⣿⣷⡤⠈⠉⠉⠛⠛⠛⠛⠉⠉⠁⢤⣾⣿⣿⡿⠟⠉⠄⠄⠄\A⠄⠄⠄⠄⠄⠄⠈⠉⠻⠁⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠈⠟⠋⠁⠄⠄⠄⠄⠄⠄\A⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄";
+    white-space: pre;
+    position: absolute;
+    top: 50%;
+    right: -2rem;
+    transform: translateY(-50%);
+    font-size: 1rem;
+    line-height: 1.3;
+    color: rgba(88, 101, 242, 0.4);
+    pointer-events: none;
+    z-index: 0;
+    font-family: monospace;
+  }
+  
+  .discord-banner > * {
+    position: relative;
+    z-index: 1;
+  }
+  
+  .discord-banner h2 {
+    margin: 0 0 1rem 0;
+    color: var(--accent);
+  }
+  
+  .discord-banner p {
+    margin-bottom: 1.5rem;
+  }
+  
+  .discord-button {
+    display: inline-block;
+    padding: 0.75rem 2rem;
+    background-color: #5865F2;
+    color: white !important;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: background-color 0.2s ease;
+  }
+  
+  .discord-button:hover {
+    background-color: #4752C4;
+  }
+</style>
