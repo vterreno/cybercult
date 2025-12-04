@@ -55,6 +55,8 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
                 <li><a href={`${base}/`}>Inicio</a></li>
                 <li><a href={`${base}ctf/picocctf/`}>PicoCTF - Inicio</a></li>
                 <li><a href={`${base}ctf/picocctf/soluciones/`}>PicoCTF - Soluciones</a></li>
+                <li><a href={`${base}dockerlabs/`}>DockerLabs - Inicio</a></li>
+                <li><a href={`${base}dockerlabs/soluciones/`}>DockerLabs - Soluciones</a></li>
                 <li><a href={`${base}ctf/recursos/`}>Recursos</a></li>
                 <li><a href="https://discord.gg/zw3PXzRdyK" target="_blank" rel="noopener">🎮 Discord</a></li>
               </ul>
@@ -72,6 +74,17 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
                   <ul class="menu__dropdown">
                     <li><a href={`${base}ctf/picocctf/`}>Inicio</a></li>
                     <li><a href={`${base}ctf/picocctf/soluciones/`}>Soluciones</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <ul class="menu">
+                <li class="menu__trigger">DockerLabs ▾</li>
+                <li>
+                  <ul class="menu__dropdown">
+                    <li><a href={`${base}dockerlabs/`}>Inicio</a></li>
+                    <li><a href={`${base}dockerlabs/soluciones/`}>Soluciones</a></li>
                   </ul>
                 </li>
               </ul>

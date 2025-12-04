@@ -1,0 +1,52 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+// Cargar todos los MD de dockerlabs
+const modules = import.meta.glob('../../content/dockerlabs/**/*.md', { eager: true });
+
+export async function getStaticPaths() {
+  const modules = import.meta.glob('../../content/dockerlabs/**/*.md', { eager: true });
+  
+  return Object.entries(modules).map(([path, mod]) => {
+    const fm = (mod as any)?.frontmatter ?? {};
+    const filename = String(path).split('/').pop()?.replace('.md', '') || '';
+    const slug = fm.slug || filename;
+    
+    return {
+      params: { slug },
+      props: { mod, fm }
+    };
+  });
+}
+
+const { slug } = Astro.params;
+const { mod, fm } = Astro.props;
+
+const Content = (mod as any).default;
+
+---
+
+<BaseLayout title={fm.title + ' - CyberCult' || fm.nombre  + ' - CyberCult' || 'Solución' + ' - CyberCult'}>
+  <article class="page"> 
+    <header>
+      <h1>{fm.title || fm.nombre}</h1>
+      <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+           {fm.date ? <time datetime={fm.date}>{fm.date}</time> : null}
+           {fm.difficulty ? <p class="meta">Dificultad: {fm.difficulty || fm.dificultad || ''}</p> : null}
+      </div>
+     
+    </header>
+
+    <section class="content">
+      <Content />
+    </section>
+
+    <p><a href="/dockerlabs/soluciones">← Volver a soluciones</a></p>
+  </article>
+</BaseLayout>
+
+<style>
+.page { max-width: 780px; margin: 0 auto; }
+.meta { color: color-mix(in srgb, var(--foreground) 60%, transparent); margin: 0; }
+.content { margin-top: 1.5rem }
+</style>

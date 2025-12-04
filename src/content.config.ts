@@ -15,4 +15,15 @@ const posts = defineCollection({
   }),
 });
 
-export const collections = { posts };
+const dockerlabs = defineCollection({
+  type: 'content',
+  schema: z.object({
+    title: z.string(),
+    slug: z.string(),
+    date: z.string(),
+    difficulty: z.string(),
+    summary: z.string().optional(),
+  }),
+});
+
+export const collections = { posts, dockerlabs };
