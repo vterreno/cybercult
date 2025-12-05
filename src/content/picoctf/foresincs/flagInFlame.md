@@ -2,7 +2,7 @@
 title: "Flag in Flame"
 slug: "flag-in-flame"
 date: 30/11/2025
-category: "forensics"
+category: "Forensics"
 difficulty: "Fácil"
 summary: "Decodificar un archivo de logs en Base64 para recuperar una imagen corrupta u oculta."
 ---
